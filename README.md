@@ -9,5 +9,5 @@
 
 
 ## Papers to read:
-- https://arxiv.org/abs/2205.05638
+- Peft: https://arxiv.org/abs/2205.05638
 - 
