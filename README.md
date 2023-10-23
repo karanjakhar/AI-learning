@@ -1,6 +1,7 @@
 # AI-learning
 
 ## List of topics to read about:    
+- GPT
 - LoRA
 - QLoRA
 - Peft
