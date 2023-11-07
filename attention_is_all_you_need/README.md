@@ -5,3 +5,6 @@ This contains code and reading material related to Attention is all you need. Wh
 - Positional embedding
 - attention layers
 - multihead attention layers
+
+
+![transformer Architecture](./assets/transformer_arch.png)
