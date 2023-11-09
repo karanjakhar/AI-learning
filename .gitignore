@@ -161,3 +161,7 @@ cython_debug/
 
 # datasets csv files
 *.csv
+
+# model weight files
+*.onnx
+*.pth
