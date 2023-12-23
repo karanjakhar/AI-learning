@@ -6,6 +6,7 @@
 - QLoRA
 - Peft
 - LLama2
+- BLEU
 
 
 ## Papers to read:
