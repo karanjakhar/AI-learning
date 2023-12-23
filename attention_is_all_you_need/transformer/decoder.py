@@ -1,8 +1,8 @@
 import torch
 from torch import nn 
-from attention import MultiHeadAttention 
-from positionwise_feed_forward import PositionwiseFeedForward 
-from layernorm import LayerNorm 
+from transformer.attention import MultiHeadAttention 
+from transformer.positionwise_feed_forward import PositionwiseFeedForward 
+from transformer.layernorm import LayerNorm 
 
 
 
@@ -25,7 +25,7 @@ class Decoder(nn.Module):
         
 
     
-    def forward(self, x,k,v):
+    def forward(self, x,k,v,encoder_mask, decoder_mask):
         B, T = x.shape
         tok_emb = self.token_embedding(x) 
         pos_emb = self.positional_embedding(torch.arange(T, device=self.device))
@@ -34,12 +34,12 @@ class Decoder(nn.Module):
 
         for i in range(self.n_layers):
             _x = x
-            x = self.attention(x,x,x, True)
+            x = self.attention(x,x,x, decoder_mask)
             x = self.dropout(x)
             x = self.layer_norm(x + _x)
 
             _x = x
-            x = self.attention(k,v,x)
+            x = self.attention(k,v,x, encoder_mask)
             x = self.dropout(x)
             x = self.layer_norm(x + _x)
 

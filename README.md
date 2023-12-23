@@ -7,6 +7,8 @@
 - Peft
 - LLama2
 - BLEU
+- BPE tokenizer
+- Word Level tokenizer algorithm (learn it, implement it and share it)
 
 
 ## Papers to read:
