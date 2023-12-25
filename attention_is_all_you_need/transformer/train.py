@@ -4,27 +4,24 @@ from torch import nn
 import torch
 from tqdm import tqdm
 
-from encoder_decoder_model import EncoderDecoder
+from transformer.encoder_decoder_model import EncoderDecoder
 from transformer.dataset import SummaryDataset
 from transformer.tokenizer import get_or_build_tokenizer
-
-
-
-def validation():
-    pass
+from transformer.validation import run_validation
 
 
 
 
-
-def train(epochs = 5):
+def train(epochs = 15):
     device = "cuda" if torch.cuda.is_available() else "mps" if torch.has_mps or torch.backends.mps.is_available() else "cpu"
-    device = 'cpu' # for testing purposes
-    experiment_data_df = pd.read_csv('experiment_summary_data.csv')
+    # device = 'cpu' # for testing purposes
+    experiment_data_df = pd.read_csv('/home/karan/kj_workspace/kj_ai/AI-learning/attention_is_all_you_need/experiment_summary_data.csv')
+    validation_data_df = pd.read_csv('/home/karan/kj_workspace/kj_ai/AI-learning/attention_is_all_you_need/experiment_validation_data.csv')
     tokenizer = get_or_build_tokenizer('./tokenizer_exp.json', experiment_data_df)
-    summary_dataset = SummaryDataset(experiment_data_df, 300, tokenizer )
-    
+    summary_dataset = SummaryDataset(experiment_data_df, 2000, tokenizer )
+    validation_dataset = SummaryDataset(validation_data_df, 2000, tokenizer )
     train_dataloader = DataLoader(summary_dataset, batch_size=2, shuffle=True)
+    validation_dataloader = DataLoader(validation_dataset, batch_size=1)
 
     model = EncoderDecoder(device=device, vocab_size=tokenizer.get_vocab_size())
 
@@ -64,4 +61,10 @@ def train(epochs = 5):
 
             optimizer.step()
             optimizer.zero_grad(set_to_none=True)
+
         
+        run_validation(model, validation_dataloader, tokenizer, 500, device, lambda msg:batch_iterator.write(msg) )
+
+
+if __name__ == "__main__":
+    train()

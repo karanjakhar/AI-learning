@@ -7,7 +7,7 @@ from transformer.layernorm import LayerNorm
 
 
 class Decoder(nn.Module):
-    def __init__(self,n_layers=2, vocab_size=51, d_model=512,drop_prob=0.1, device='cpu') -> None:
+    def __init__(self,n_layers=1, vocab_size=51, d_model=512,drop_prob=0.1, device='cpu') -> None:
         super(Decoder, self).__init__()
 
         self.positional_embedding = nn.Embedding(vocab_size, d_model)
