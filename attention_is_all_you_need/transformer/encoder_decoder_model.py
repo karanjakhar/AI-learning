@@ -12,7 +12,15 @@ class EncoderDecoder(nn.Module):
 
     def forward(self,encoder_input, decoder_input, encoder_mask, decoder_mask):
         encoder_output = self.encoder(encoder_input, encoder_mask)
-        output = self.decoder(decoder_input, encoder_output, encoder_output,encoder_mask, decoder_mask)
-        output = self.lm_head(output)
+        decoder_output = self.decoder(decoder_input, encoder_output, encoder_output,encoder_mask, decoder_mask)
+        output = self.lm_head(decoder_output)
         return output
+
+    def encode(self, encoder_input, encoder_mask):
+        return self.encoder(encoder_input, encoder_mask)
     
+    def decode(self, decoder_input, encoder_output, encoder_mask, decoder_mask):
+        return self.decoder(decoder_input, encoder_output, encoder_output, encoder_mask, decoder_mask)
+    
+    def projection_layer(self, decoder_output):
+        return self.lm_head(decoder_output)
