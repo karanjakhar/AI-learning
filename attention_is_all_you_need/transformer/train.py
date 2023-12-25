@@ -8,6 +8,15 @@ from encoder_decoder_model import EncoderDecoder
 from transformer.dataset import SummaryDataset
 from transformer.tokenizer import get_or_build_tokenizer
 
+
+
+def validation():
+    pass
+
+
+
+
+
 def train(epochs = 5):
     device = "cuda" if torch.cuda.is_available() else "mps" if torch.has_mps or torch.backends.mps.is_available() else "cpu"
     device = 'cpu' # for testing purposes
