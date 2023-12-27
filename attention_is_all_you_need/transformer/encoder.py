@@ -3,6 +3,7 @@ from torch import nn
 from transformer.attention import MultiHeadAttention 
 from transformer.positionwise_feed_forward import PositionwiseFeedForward 
 from transformer.layernorm import LayerNorm 
+from transformer.position_encoding import PositionalEncoding
 
 
 
@@ -10,7 +11,7 @@ class Encoder(nn.Module):
     def __init__(self,n_layers=1, drop_prob=0.1, vocab_size=51, seq_len=2000, d_model=512, device='cpu'):
         super(Encoder, self).__init__()
         self.token_embedding = nn.Embedding(vocab_size, d_model)
-        self.positional_embedding = nn.Embedding(vocab_size, d_model)
+        self.positional_embedding = PositionalEncoding(d_model, seq_len)
         self.attention = MultiHeadAttention()
         self.ffn = PositionwiseFeedForward()
         self.layer_norm = LayerNorm()
@@ -23,8 +24,7 @@ class Encoder(nn.Module):
     def forward(self, x, encoder_mask):
         B, T = x.shape
         tok_emb = self.token_embedding(x)
-        pos_emb = self.positional_embedding(torch.arange(T, device=self.device))
-        x = tok_emb + pos_emb
+        x = self.positional_embedding(tok_emb)
 
         for i in range(self.n_layers):
             _x = x

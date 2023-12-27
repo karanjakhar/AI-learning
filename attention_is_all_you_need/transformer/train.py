@@ -49,6 +49,8 @@ def train(epochs = 15):
             encoder_mask = batch['encoder_mask'].to(device)
             decoder_mask = batch['decoder_mask'].to(device)
 
+            # print(encoder_input.size(), decoder_input.size())
+
             decoder_output = model(encoder_input, decoder_input, encoder_mask, decoder_mask)
 
             # decoder_output shape (Batch, seq_len, vocab_size)

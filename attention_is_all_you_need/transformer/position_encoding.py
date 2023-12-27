@@ -23,7 +23,7 @@ class PositionalEncoding(nn.Module):
         pe[:, 0::2] = torch.sin(position * div_term) # sin(postion * (10000 ** (2i / d_model))
 
         # Apply cosine to odd indices
-        pe[:, 1::2] = torch.cosine(position * div_term) # cos(position * (10000 ** (2i / d_model)))
+        pe[:, 1::2] = torch.cos(position * div_term) # cos(position * (10000 ** (2i / d_model)))
 
         # Add batch dimension
         pe = pe.unsqueeze(0) # (1, seq_len, d_model)
@@ -32,7 +32,7 @@ class PositionalEncoding(nn.Module):
         self.register_buffer('pe', pe)
 
     def forward(self, x):
-        x = x + (self.pe[:, :x.shape[1], :]).requires_grad(False) # (batch, seq_len, d_model)
+        x = x + (self.pe[:, :x.shape[1], :]).requires_grad_(False) # (batch, seq_len, d_model)
         return self.dropout(x)
 
 
