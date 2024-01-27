@@ -17,7 +17,7 @@ Now we want to fine tune to improve the result or adapt it to a new task. Let's 
 
 Problems:
 - `W` has a large amount of parameters. 
-- We want to train multiple version of the network for different tasks, therefore we need save `W` weights for each task. It will take a lot of storage. And deploying multiple network with this size is not efficient. 
+- We want to train multiple versions of the network for different tasks, therefore we need save `W` weights for each task. It will take a lot of storage. And deploying multiple network with this size is not efficient. 
 
 Solution:
 
@@ -28,7 +28,7 @@ Let's create two new matrix `A` and `B` such that their shape is:
 
 where `r` is rank and `r < min(d, k)`.
 
-so when we multiple` B `and `A `we will get the same shape as `W, (d,k)`
+so when we multiply ` B `and `A `we will get the same shape as `W, (d,k)`
 
 Now our model with LoRA becomes: 
 
