@@ -165,3 +165,8 @@ cython_debug/
 # model weight files
 *.onnx
 *.pth
+
+# mnist dataset files
+*.gz
+*-ubyte
+
